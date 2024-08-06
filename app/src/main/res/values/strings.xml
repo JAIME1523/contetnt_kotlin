@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">client_content</string>
+    <string name="start">start</string>
+    <string name="emit">Emit</string>
+</resources>
