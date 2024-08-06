@@ -26,14 +26,13 @@ class MainActivity : ComponentActivity() {
         btnStart.setOnClickListener{
             lifecycleScope.launch {
                 //MycontenProvider().query(TypeUrl.Users, selection = "asd", myCallback = fun() {});
-             var resul =   TransactionService().startTransaction(myCON)
-                Log.e("Main", resul.toString())
+                    val result =   TransactionService().startTransaction(myCON)
+                Log.e("Main", "$result")
 
             }
         }
         btnEmit.setOnClickListener {
-            val cursor = contentResolver.query(Uri.parse("content://com.example.meta_app.MyAndroidContentProvider/users"), null, "getData", null, null)
-            Log.d("des", "${cursor}")
+
         }
 
     }

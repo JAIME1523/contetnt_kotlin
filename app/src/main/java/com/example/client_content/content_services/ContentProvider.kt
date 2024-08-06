@@ -12,30 +12,35 @@ import kotlinx.coroutines.async
 
 class ContentProvider {
     private var  baseUrl = "content://com.example.meta_app.MyAndroidContentProvider";
-     suspend fun queryCustom(context: Context, urlType:EnumsUrl, selection:String):String{
-       return  CoroutineScope(Dispatchers.Default).async {
-           val cursor = context.contentResolver.query(
-               Uri.parse("${baseUrl}/${urlType.value}"),
-               null,
-               selection,
-               null,
-               null
-           )
-           cursor?.moveToNext()
-           return@async cursor?.getString(0)?:"";
-       }.await()
+     suspend fun queryCustom(context: Context, urlType:EnumsUrl, selection:String):ResponseModel{
+         try {
+             val result =  CoroutineScope(Dispatchers.Default).async {
+                 val cursor = context.contentResolver.query(
+                     Uri.parse("${baseUrl}/${urlType.value}"),
+                     null,
+                     selection,
+                     null,
+                     null
+                 )
+                 cursor?.moveToNext()
+                 return@async cursor?.getString(0)?:"";
+             }.await()
+             return ResponseModel(true,result )
+         }catch (errors : Error){
+             return ResponseModel(false,"$errors" )
+         }
     }
-    suspend fun startTransaction(context: Context,selection:String) : String {
+    suspend fun startTransaction(context: Context,selection:String) : ResponseModel {
       return queryObserver(context, selection, EnumsUrl.StartTransaction, EnumsUrl.TransactionResult);
     }
-    suspend fun cancelTransaction(context: Context,selection:String) : String {
+    suspend fun cancelTransaction(context: Context,selection:String) : ResponseModel {
         return queryObserver(context, selection, EnumsUrl.StartTransaction, EnumsUrl.TransactionResult);
     }
 
-    private suspend fun queryObserver(context: Context, selection:String, urlInit:EnumsUrl, urlResult:EnumsUrl ) : String {
-        var finalResult  = "";
-
-        val curs =  CoroutineScope(Dispatchers.Default).async {
+    private suspend fun queryObserver(context: Context, selection:String, urlInit:EnumsUrl, urlResult:EnumsUrl ) : ResponseModel {
+        try {
+            var finalResult  = "";
+            val curs =  CoroutineScope(Dispatchers.Default).async {
                 val cursor = context.contentResolver.query(
                     Uri.parse("${baseUrl}/${urlInit.value}"),
                     null,
@@ -46,33 +51,38 @@ class ContentProvider {
 
                 cursor?.moveToNext()
 
-            return@async cursor;
-        }.await()
-        CoroutineScope(Dispatchers.Default).async {
-        curs?.registerContentObserver(
-            TransactionContentObservers(
-                null,
-                curs,
-                fun() {
-                    val cursor = context.contentResolver.query(
-                        Uri.parse("${baseUrl}/${urlResult.value}"),
+                return@async cursor;
+            }.await()
+            CoroutineScope(Dispatchers.Default).async {
+                curs?.registerContentObserver(
+                    TransactionContentObservers(
                         null,
-                        selection,
-                        null,
-                        null
-                    )
-                    cursor?.moveToNext()
-                    finalResult  = cursor?.getString(0) ?: "nada";
-                },
+                        curs,
+                        fun() {
+                            val cursor = context.contentResolver.query(
+                                Uri.parse("${baseUrl}/${urlResult.value}"),
+                                null,
+                                selection,
+                                null,
+                                null
+                            )
+                            cursor?.moveToNext()
+                            finalResult  = cursor?.getString(0) ?: "nada";
+                        },
 
-        ))}.await()
-        CoroutineScope(Dispatchers.Default).async {
-    while (finalResult.isEmpty()){
+                        ))}.await()
+            CoroutineScope(Dispatchers.Default).async {
+                while (finalResult.isEmpty()){
 
-    }}.await()
+                }}.await()
 
-return  finalResult;
-    }
+            return  ResponseModel(true, finalResult);
+
+        }catch (errors : Error){
+            return  ResponseModel(false, errors.toString());
+
+        }
+            }
 }
 
 

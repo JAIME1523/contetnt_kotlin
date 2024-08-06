@@ -11,8 +11,8 @@ import android.util.Log
 private var contentProvider = ContentProvider();
     suspend fun getTransaction(context: Context): ResponseTransaction {
         val resul = contentProvider.queryCustom(context, EnumsUrl.Users, selection = "")
-       Log.w("TransactionService", resul)
-        return ResponseTransaction(true, resul);
+        Log.w("TransactionService", resul.toString())
+        return ResponseTransaction(true, resul.response);
     }
 
     suspend fun getStatus(context: Context): ResponseTransaction {
@@ -21,15 +21,14 @@ private var contentProvider = ContentProvider();
     }
     suspend fun startTransaction(context: Context): ResponseTransaction {
      val res =   contentProvider.startTransaction(context, "", )
-        val resultData =  ResponseTransaction(false, res);
-
+        val resultData =  ResponseTransaction(false, res.response);
         return resultData;
     }
 
     suspend  fun cancelTransaction(context: Context): ResponseTransaction {
-        var resul =contentProvider.cancelTransaction(context,"true" ,
+        val resul =contentProvider.cancelTransaction(context,"true" ,
          )
-        return ResponseTransaction(true, "test");
+        return ResponseTransaction(true, resul.response);
     }
 
 }
