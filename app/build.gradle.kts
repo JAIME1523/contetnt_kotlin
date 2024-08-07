@@ -48,12 +48,14 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
 }
+
 dependencies {
 
     implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.activity:activity-compose:1.7.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
+    implementation("androidx.activity:activity-compose:1.9.1")
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -67,13 +69,11 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-   // implementation("io.grpc:grpc-okhttp:1.47.0")
-  //  implementation("io.grpc:grpc-protobuf-lite:1.65.1")
-   // implementation("io.grpc:grpc-stub:1.57.0")
     implementation("org.apache.tomcat:annotations-api:6.0.53")
-  //  implementation("io.grpc:grpc-kotlin-stub:1.4.1")
-  //  implementation("com.google.protobuf:protobuf-kotlin:4.27.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
+    //implementation("com.google.protobuf:protobuf-java:4.27.3")
+    implementation("com.google.protobuf:protobuf-kotlin:4.27.3")
+   // implementation("io.grpc:grpc-kotlin-stub:1.4.1")
 
 }

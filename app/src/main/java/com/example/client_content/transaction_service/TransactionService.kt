@@ -4,6 +4,7 @@ import com.example.client_content.content_services.ContentProvider
 import com.example.client_content.content_services.enums.EnumsUrl
 import android.content.Context
 import android.util.Log
+import java.util.Base64
 
 
  class TransactionService {
@@ -32,3 +33,5 @@ private var contentProvider = ContentProvider();
     }
 
 }
+ private fun ByteArray.toBase64(): String =
+     String(Base64.getEncoder().encode(this))
