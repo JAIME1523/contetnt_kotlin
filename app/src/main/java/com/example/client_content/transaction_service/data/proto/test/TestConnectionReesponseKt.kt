@@ -4,7 +4,7 @@
 // Generated files should ignore deprecation warnings
 @file:Suppress("DEPRECATION")
 
-package com.example.client_content.transaction_service.data.proto
+package com.example.client_content.transaction_service.data.proto.test
 
 @kotlin.jvm.JvmName("-initializetestConnectionReesponse")
 public inline fun testConnectionReesponse(block: TestConnectionReesponseKt.Dsl.() -> kotlin.Unit): TestConect.TestConnectionReesponse =

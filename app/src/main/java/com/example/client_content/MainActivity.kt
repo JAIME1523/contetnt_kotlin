@@ -5,7 +5,7 @@ import android.util.Log
 import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.client_content.transaction_service.data.proto.TestConect
+import com.example.client_content.transaction_service.data.proto.test.TestConect
 
 import com.example.client_content.transaction_service.TransactionService
 import kotlinx.coroutines.launch

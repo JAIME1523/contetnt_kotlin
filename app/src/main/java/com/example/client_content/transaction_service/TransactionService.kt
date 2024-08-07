@@ -4,6 +4,7 @@ import com.example.client_content.content_services.ContentProvider
 import com.example.client_content.content_services.enums.EnumsUrl
 import android.content.Context
 import android.util.Log
+import com.example.client_content.transaction_service.data.models.ResponseTransaction
 import java.util.Base64
 
 
